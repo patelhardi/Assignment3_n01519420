@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Assignment3_n01519420.Models;
+using System.Diagnostics;
 
 namespace Assignment3_n01519420.Controllers
 {
@@ -14,14 +16,64 @@ namespace Assignment3_n01519420.Controllers
             return View();
         }
 
+        //GET: Teacher/List
         public ActionResult List()
+        {
+            //create object of datacontroller class
+            TeacherDataController controller = new TeacherDataController();
+            //connect with ListTeacher method into the datacontroller class
+            IEnumerable<Teacher> Teachers = controller.ListTeachers();
+            //display list of teachers
+            return View(Teachers);
+        }
+
+        //taking teacherid input value
+        //GET : /Teacher/Show/{id}
+        public ActionResult Show(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            //call FindTeacher method and passing teacherid 
+            Teacher NewTeacher = controller.FindTeacher(id);
+            //display selected teacher information
+            return View(NewTeacher);
+        }
+
+        //GET: /Teacher/Add
+        public ActionResult Add()
         {
             return View();
         }
 
-        public ActionResult Show()
+        //POST : /Teacher/Delete/{id}
+        [HttpPost]
+        public ActionResult Delete(int id)
         {
-            return View();
+            TeacherDataController controller = new TeacherDataController();
+            //call DeleteTeacher method into the datacontroller class and pass teacherid
+            controller.DeleteTeacher(id);
+            //redirect to list view page
+            return RedirectToAction("List");
+        }
+
+        //take parameters firtname, lastname, employeenumber, hiredate, and salary from the view page
+        //POST : /Teacher/Create
+        [HttpPost]
+        public ActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNumber, DateTime hiredate, decimal salary)
+        {
+            //create model class teacher object
+            Teacher NewTeacher = new Teacher();
+            NewTeacher.TeacherFName = TeacherFname;
+            NewTeacher.TeacherLName = TeacherLname;
+            NewTeacher.TEmpNumber = EmployeeNumber;
+            NewTeacher.HireDate = hiredate;
+            NewTeacher.Salary = salary;
+
+            TeacherDataController controller = new TeacherDataController();
+            //call AddTeacher method and pass teacher object to the method
+            controller.AddTeacher(NewTeacher);
+
+            //redirect to the list view page
+            return RedirectToAction("List");
         }
     }
 }

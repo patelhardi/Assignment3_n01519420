@@ -1,7 +1,20 @@
-﻿
+﻿@model Assignment3_n01519420.Models.Teacher
 @{
     ViewBag.Title = "Show";
 }
 
-<h2>Show</h2>
+<div id="containershow">
+    <nav>
+        <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+    </nav>
+    <h2>@Model.TeacherFName @Model.TeacherLName</h2>
+    <p style="font-style:italic;">Employee Number: @Model.TEmpNumber</p>
+    <p style="font-style:italic;">Hire Date: @Model.HireDate.ToLongDateString()</p>
+    <p style="font-style:italic;">Salary: @Model.Salary</p>
 
+    <form method="post" action="/Teacher/Delete/@Model.TeacherId">
+        <button class="delbutton">
+            Delete
+        </button>
+    </form>
+</div>
