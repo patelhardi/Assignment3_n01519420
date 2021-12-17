@@ -137,6 +137,27 @@ namespace Assignment3_n01519420.Controllers
             Conn.Close();
         }
 
+        [HttpPost]
+        public void UpdateTeacher(int id, Teacher NewTeacher)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+            cmd.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@TENumber, hiredate=@HireDate, salary=@Salary where teacherid=@id";
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFName);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLName);
+            cmd.Parameters.AddWithValue("@TENumber", NewTeacher.TEmpNumber);
+            cmd.Parameters.AddWithValue("@HireDate", NewTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
         /// <summary>
         /// display list of students from database
         /// </summary>
