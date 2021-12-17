@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Assignment3_n01519420.Controllers
 {
-    public class ClassController : Controller
+    public class ClassesController : Controller
     {
         // GET: Class
         public ActionResult Index()
